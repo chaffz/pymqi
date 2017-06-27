@@ -534,7 +534,7 @@ static PyObject *pymqe_MQGET(PyObject *self, PyObject *args) {
   gmoP = (MQGMO *)getOptsBuffer;
 
   /* Allocate temp. storage for message */
-  if (!(msgBuffer = malloc(maxLength))) {
+  if (!(msgBuffer = (char *)malloc(maxLength))) {
     PyErr_SetString(ErrorObj, "No memory for message");
     return NULL;
   }
@@ -922,7 +922,7 @@ static PyObject* pymqe_MQINQMP(PyObject *self, PyObject *args) {
     return NULL;
   }
 
-  value = malloc(max_value_length * sizeof(MQBYTE));
+  value = (MQBYTE *)malloc(max_value_length * sizeof(MQBYTE));
   
   impo.Options = impo_options;
   pd.Options = pd_options;
@@ -1368,7 +1368,7 @@ static PyObject *pymqe_mqaiExecute(PyObject *self, PyObject *args) {
 
                                         strLength++;   /* + one for the Null */
 
-                                        if(!(itemStrVal = malloc(strLength))) {
+                                        if(!(itemStrVal = (MQCHAR *)malloc(strLength))) {
                                             PyErr_SetString(ErrorObj, "Out of memory");
                                             cleanupBags(adminBag, responseBag);
                                             Py_DECREF(resultsList);
@@ -1432,7 +1432,7 @@ static PyObject *pymqe_mqaiExecute(PyObject *self, PyObject *args) {
 
                                         byteStrLength++;   /* + one for the Null */
 
-                                        if(!(itemByteStrVal = malloc(byteStrLength))) {
+                                        if(!(itemByteStrVal = (MQBYTE *)malloc(byteStrLength))) {
                                             PyErr_SetString(ErrorObj, "Out of memory");
                                             cleanupBags(adminBag, responseBag);
                                             Py_DECREF(resultsList);
